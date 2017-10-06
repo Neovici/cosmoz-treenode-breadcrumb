@@ -29,9 +29,9 @@ The component uses a custom template to display each path part, allowing user to
 			}
 
 			::slotted(.separator) {
-                margin: 0 0.2em;
+				margin: 0 0.2em;
 				flex-shrink: 0;
-            }
+			}
 
 			::slotted(*) {
 				white-space: nowrap;
@@ -170,6 +170,10 @@ The component uses a custom template to display each path part, allowing user to
 			},
 
 			_computePathToRender: function (path, hideFromRoot, showMaxNode) {
+				if (!path){
+					return;
+				}
+
 				var pathToRender = path;
 				if (hideFromRoot > 0 && path.length > hideFromRoot) {
 					pathToRender = path.slice(hideFromRoot);
@@ -188,6 +192,7 @@ The component uses a custom template to display each path part, allowing user to
 				var path = null,
 					node,
 					i;
+
 				if (!ownerTree) {
 					return;
 				}
@@ -248,6 +253,10 @@ The component uses a custom template to display each path part, allowing user to
 					instance[this.indexAs] = i;
 					instance[this.valueAs] = this.ownerTree.getProperty(node, this.valueProperty);
 					parent.appendChild(instance.root);
+
+					if (instance._flushProperties) {
+						instance._flushProperties(true);
+					}
 				}
 
 				this._hideEllipsis = pathToRender.length === this._path.length;
@@ -266,9 +275,11 @@ The component uses a custom template to display each path part, allowing user to
 						inst = this._templateInstances[i];
 						// TODO(pasleq): not safe to use Templatizer internal property, but seems children is not working on Safari
 						// See Polymer.Templatizer source
-						for (j = 0; j < inst._children.length; j += 1) {
-							// Appending the child to instance instance's root will detach it from it's current location
-							Polymer.dom(inst.root).appendChild(inst._children[j]);
+						if (inst._children){
+							for (j = 0; j < inst._children.length; j += 1) {
+								// Appending the child to instance instance's root will detach it from it's current location
+								Polymer.dom(inst.root).appendChild(inst._children[j]);
+							}
 						}
 					}
 				}
