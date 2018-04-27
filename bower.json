@@ -1,7 +1,17 @@
 {
 	"name": "cosmoz-treenode-breadcrumb",
-	"description": "Custom element to display a node's path using a breadcrumb",
+	"homepage": "https://github.com/Neovici/cosmoz-treenode-breadcrumb",
+	"authors": [
+		"Neovici Development"
+	],
+	"description": "Custom element to display a node path using a breadcrumb.",
 	"main": "cosmoz-treenode-breadcrumb.html",
+	"keywords": [
+		"web-components",
+		"polymer",
+		"cosmoz"
+	],
+	"license": "Apache-2.0",
 	"dependencies": {
 		"polymer": "Polymer/polymer#1.9 - 2",
 		"cosmoz-tree": "Neovici/cosmoz-tree#^1.0.0",
