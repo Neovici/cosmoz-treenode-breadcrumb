@@ -175,9 +175,9 @@
 			var children = multiRootFixture.getEffectiveChildren();
 			// TODO(pasleq): how to check the first separator is not visible ?
 			assert.equal(children[0].textContent, multiRootFixture.pathSeparator);
-		//	assert.equal(children[1].textContent, 'Node2');
-		//	assert.equal(children[2].textContent, multiRootFixture.pathSeparator);
-		//	assert.equal(children[3].textContent, 'Node3');
+			assert.equal(children[1].textContent, 'Node2');
+			assert.equal(children[2].textContent, multiRootFixture.pathSeparator);
+			assert.equal(children[3].textContent, 'Node3');
 			done();
 		});
 
@@ -204,9 +204,9 @@
 			var children = missingAncestorFixture.getEffectiveChildren();
 			// TODO(pasleq): how to check the first separator is not visible ?
 			assert.equal(children[0].textContent, missingAncestorFixture.pathSeparator);
-			//assert.equal(children[1].textContent, 'Node301');
-			//assert.equal(children[2].textContent, missingAncestorFixture.pathSeparator);
-			//assert.equal(children[3].textContent, 'Node401');
+			assert.equal(children[1].textContent, 'Node301');
+			assert.equal(children[2].textContent, missingAncestorFixture.pathSeparator);
+			assert.equal(children[3].textContent, 'Node401');
 			done();
 		});
 
