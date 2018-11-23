@@ -92,6 +92,11 @@ The component uses a custom template to display each path part, allowing user to
 					value: 'node'
 				},
 
+				pathSeparatorAs: {
+					type: String,
+					value: 'pathSeparator'
+				},
+
 				valueAs: {
 					type: String,
 					value: 'value'
@@ -166,6 +171,7 @@ The component uses a custom template to display each path part, allowing user to
 				this._instanceProps[this.nodeAs] = true;
 				this._instanceProps[this.indexAs] = true;
 				this._instanceProps[this.valueAs] = true;
+				this._instanceProps[this.pathSeparatorAs] = true;
 				this._templateInstances = [];
 			},
 
@@ -251,6 +257,7 @@ The component uses a custom template to display each path part, allowing user to
 					instance = this._templateInstances[i];
 					instance[this.nodeAs] = node;
 					instance[this.indexAs] = i;
+					instance[this.pathSeparatorAs] = this.pathSeparator;
 					instance[this.valueAs] = this.ownerTree.getProperty(node, this.valueProperty);
 					parent.appendChild(instance.root);
 
