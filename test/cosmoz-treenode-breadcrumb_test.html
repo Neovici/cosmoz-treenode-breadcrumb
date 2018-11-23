@@ -90,7 +90,7 @@
 		});
 
 		test('renders all path parts', () => {
-			const children = basicFixture.getEffectiveChildren();
+			const children = Polymer.FlattenedNodesObserver.getFlattenedNodes(basicFixture).filter(n => n.nodeType === Node.ELEMENT_NODE);
 			// TODO(pasleq): how to check the first separator is not visible ?
 			assert.equal(children[0].textContent, basicFixture.pathSeparator);
 			assert.equal(children[1].textContent, 'Root');
@@ -108,8 +108,7 @@
 
 			basicFixture.keyValue = '1.4';
 
-			children = basicFixture.getEffectiveChildren();
-
+			children = Polymer.FlattenedNodesObserver.getFlattenedNodes(basicFixture).filter(n => n.nodeType === Node.ELEMENT_NODE);
 			// verfify node 1.4 is rendered
 			assert.equal(children[0].textContent, basicFixture.pathSeparator);
 			assert.equal(children[1].textContent, 'Root');
@@ -141,7 +140,7 @@
 		});
 
 		test('renders all path parts', () => {
-			const children = basicFixture.getEffectiveChildren();
+			const children = Polymer.FlattenedNodesObserver.getFlattenedNodes(basicFixture).filter(n => n.nodeType === Node.ELEMENT_NODE);
 			// TODO(pasleq): how to check the first separator is not visible ?
 			assert.equal(children[0].textContent, basicFixture.pathSeparator);
 			assert.equal(children[1].textContent, 'Root');
@@ -170,7 +169,7 @@
 		});
 
 		test('renders all path parts', () => {
-			const children = multiRootFixture.getEffectiveChildren();
+			const children = Polymer.FlattenedNodesObserver.getFlattenedNodes(multiRootFixture).filter(n => n.nodeType === Node.ELEMENT_NODE);
 			// TODO(pasleq): how to check the first separator is not visible ?
 			assert.equal(children[0].textContent, multiRootFixture.pathSeparator);
 			assert.equal(children[1].textContent, 'Node2');
@@ -198,7 +197,7 @@
 		});
 
 		test('renders all path parts', () => {
-			const children = missingAncestorFixture.getEffectiveChildren();
+			const children = Polymer.FlattenedNodesObserver.getFlattenedNodes(missingAncestorFixture).filter(n => n.nodeType === Node.ELEMENT_NODE);
 			// TODO(pasleq): how to check the first separator is not visible ?
 			assert.equal(children[0].textContent, missingAncestorFixture.pathSeparator);
 			assert.equal(children[1].textContent, 'Node301');
