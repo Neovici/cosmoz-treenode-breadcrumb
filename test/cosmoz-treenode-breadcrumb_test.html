@@ -93,11 +93,11 @@
 			var children = basicFixture.getEffectiveChildren();
 			// TODO(pasleq): how to check the first separator is not visible ?
 			assert.equal(children[0].textContent, basicFixture.pathSeparator);
-		//	assert.equal(children[1].textContent, 'Root');
-		//	assert.equal(children[2].textContent, basicFixture.pathSeparator);
-		//	assert.equal(children[3].textContent, 'Node2');
-		//	assert.equal(children[4].textContent, basicFixture.pathSeparator);
-		//	assert.equal(children[5].textContent, 'Node3');
+			assert.equal(children[1].textContent, 'Root');
+			assert.equal(children[2].textContent, basicFixture.pathSeparator);
+			assert.equal(children[3].textContent, 'Node2');
+			assert.equal(children[4].textContent, basicFixture.pathSeparator);
+			assert.equal(children[5].textContent, 'Node3');
 			done();
 		});
 
