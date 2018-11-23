@@ -72,25 +72,29 @@
 	</test-fixture>
 
 	<script>
-	suite('basic', () => {
+	suite('basic', function () {
 		var basicFixture,
 			basicTree;
 
-		suiteSetup(done => {
-			const basicTreeFixture = fixture('basicTree');
-			basicTreeFixture.addEventListener('response', () => {
+		suiteSetup(function (done) {
+			var basicTreeFixture = fixture('basicTree');
+			basicTreeFixture.addEventListener('response', function () {
 				basicTree = new Cosmoz.DefaultTree(basicTreeFixture.lastResponse);
 				done();
 			});
 		});
 
-		setup(() => {
+		setup(function () {
 			basicFixture = fixture('basic');
 			basicFixture.ownerTree = basicTree;
 		});
 
-		test('renders all path parts', () => {
-			const children = Polymer.FlattenedNodesObserver.getFlattenedNodes(basicFixture).filter(n => n.nodeType === Node.ELEMENT_NODE);
+		test('instantiating the element works', function () {
+			assert.equal(basicFixture.is, 'cosmoz-treenode-breadcrumb');
+		});
+
+		test('renders all path parts', function () {
+			var children = basicFixture.getEffectiveChildren();
 			// TODO(pasleq): how to check the first separator is not visible ?
 			assert.equal(children[0].textContent, basicFixture.pathSeparator);
 			assert.equal(children[1].textContent, 'Root');
@@ -100,15 +104,15 @@
 			assert.equal(children[5].textContent, 'Node3');
 		});
 
-		test('reuse template instances', () => {
-			const inst0 = basicFixture._templateInstances[0],
-				inst1 = basicFixture._templateInstances[1];
-
-			let children;
+		test('reuse template instances', function () {
+			var inst0 = basicFixture._templateInstances[0],
+				inst1 = basicFixture._templateInstances[1],
+				children;
 
 			basicFixture.keyValue = '1.4';
 
-			children = Polymer.FlattenedNodesObserver.getFlattenedNodes(basicFixture).filter(n => n.nodeType === Node.ELEMENT_NODE);
+			children = basicFixture.getEffectiveChildren();
+
 			// verfify node 1.4 is rendered
 			assert.equal(children[0].textContent, basicFixture.pathSeparator);
 			assert.equal(children[1].textContent, 'Root');
@@ -122,25 +126,25 @@
 
 	});
 
-	suite('lookupNodeById', () => {
-		let basicFixture,
+	suite('lookupNodeById', function () {
+		var basicFixture,
 			basicTree;
 
-		suiteSetup(done => {
-			const basicTreeFixture = fixture('basicTree');
-			basicTreeFixture.addEventListener('response', () => {
+		suiteSetup(function (done) {
+			var basicTreeFixture = fixture('basicTree');
+			basicTreeFixture.addEventListener('response', function () {
 				basicTree = new Cosmoz.DefaultTree(basicTreeFixture.lastResponse);
 				done();
 			});
 		});
 
-		setup(() => {
+		setup(function () {
 			basicFixture = fixture('lookupNodeById');
 			basicFixture.ownerTree = basicTree;
 		});
 
-		test('renders all path parts', () => {
-			const children = Polymer.FlattenedNodesObserver.getFlattenedNodes(basicFixture).filter(n => n.nodeType === Node.ELEMENT_NODE);
+		test('renders all path parts', function () {
+			var children = basicFixture.getEffectiveChildren();
 			// TODO(pasleq): how to check the first separator is not visible ?
 			assert.equal(children[0].textContent, basicFixture.pathSeparator);
 			assert.equal(children[1].textContent, 'Root');
@@ -151,25 +155,25 @@
 		});
 
 	});
-	suite('multiRoot', () => {
-		let multiRootFixture,
+	suite('multiRoot', function () {
+		var multiRootFixture,
 			multiRootTree;
 
-		suiteSetup(done => {
-			const treeFixture = fixture('multiRootTree');
-			treeFixture.addEventListener('response', () => {
+		suiteSetup(function (done) {
+			var treeFixture = fixture('multiRootTree');
+			treeFixture.addEventListener('response', function () {
 				multiRootTree = new Cosmoz.DefaultTree(treeFixture.lastResponse);
 				done();
 			});
 		});
 
-		setup(() => {
+		setup(function () {
 			multiRootFixture = fixture('multiRoot');
 			multiRootFixture.ownerTree = multiRootTree;
 		});
 
-		test('renders all path parts', () => {
-			const children = Polymer.FlattenedNodesObserver.getFlattenedNodes(multiRootFixture).filter(n => n.nodeType === Node.ELEMENT_NODE);
+		test('renders all path parts', function () {
+			var children = multiRootFixture.getEffectiveChildren();
 			// TODO(pasleq): how to check the first separator is not visible ?
 			assert.equal(children[0].textContent, multiRootFixture.pathSeparator);
 			assert.equal(children[1].textContent, 'Node2');
@@ -179,31 +183,32 @@
 
 	});
 
-	suite('missingAncestor', () => {
-		let missingAncestorFixture,
+	suite('missingAncestor', function () {
+		var missingAncestorFixture,
 			missingAncestorTree;
 
-		suiteSetup((done) => {
-			const treeFixture = fixture('missingAncestorTree');
-			treeFixture.addEventListener('response', () => {
+		suiteSetup(function (done) {
+			var treeFixture = fixture('missingAncestorTree');
+			treeFixture.addEventListener('response', function () {
 				missingAncestorTree = new Cosmoz.DefaultTree(treeFixture.lastResponse);
 				done();
 			});
 		});
 
-		setup(() => {
+		setup(function () {
 			missingAncestorFixture = fixture('missingAncestor');
 			missingAncestorFixture.ownerTree = missingAncestorTree;
 		});
 
-		test('renders all path parts', () => {
-			const children = Polymer.FlattenedNodesObserver.getFlattenedNodes(missingAncestorFixture).filter(n => n.nodeType === Node.ELEMENT_NODE);
+		test('renders all path parts', function () {
+			var children = missingAncestorFixture.getEffectiveChildren();
 			// TODO(pasleq): how to check the first separator is not visible ?
 			assert.equal(children[0].textContent, missingAncestorFixture.pathSeparator);
 			assert.equal(children[1].textContent, 'Node301');
 			assert.equal(children[2].textContent, missingAncestorFixture.pathSeparator);
 			assert.equal(children[3].textContent, 'Node401');
 		});
+
 	});
 	</script>
 </body></html>
