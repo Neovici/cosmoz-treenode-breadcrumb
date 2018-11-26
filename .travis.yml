@@ -1,7 +1,8 @@
 language: node_js
-node_js: 6
-dist: trusty
-sudo: required
+env:
+  global:
+  - SAUCE_USERNAME=nomego
+  - secure: VBlnM5oORQ6yaERKw7wfksz/aWJj5xSQ8zN6ZrnLjyM6CdkwjJ2DrHfR/VX3kTHIfjWzqDNG+84T1AdDc9IchNs+/t4giCycil3gyLaXccM09yURc6TZ1Edb7yFmHE8GovwzyapFB5StgyzrfjCDHh/6EuESaCTsP0c76vIV63xcX6GKxrfNQpMiaxacisxeAZIU0EjGXe/Is4WdJtAD+qJGlQvn3TCluV2dcsRYdmXIawwFHcWf/PkiG+PU4m8GnWuv1p8NoCfXOiEaW11fzsjVf/Qj1zcCtAtylOyvakwo4VT6e7ccbMWbeZVP4RvoklRQgEaOGG6wUNFSmjO6JKEY8A2J2aFYg8cQkU7lWLkfMSl0AnZR56K6P6WyPge+RnrKvrE95qETnRMblk/Nq/E4lycYQV+++ct/Gd7uHLwdQAMAUzX1YfPkeywj20U6ScvyE4h7uf2QwzPera6/BMts+GrqN8uBxvO7jqMaHvzqPlUmlzPv0+UqZPQ7s2tdjr6Ptr6rDwvJS5WOpB0Ztz6VKVUMRO999gJMFKw8L3fadAzhyN5Ouq83RGIKFYqdJ7z448bh5tD9SCSXp8bJomyEHGAPJJs33EZE5dYueJqS3tKdh9nq7ISRPtXjifQ+6lWBnpCAEMPj2zvl4Sx3bclGBIvBXARSxCEbHWNG+Y4=
 addons:
   firefox: latest
   apt:
@@ -14,13 +15,12 @@ cache:
   directories:
   - node_modules
   - bower_components
-  - bower_components-1.x
   - ".eslintcache"
   - "$HOME/.cache/bower"
 before_script:
 - yarn run lint
 script:
-- xvfb-run yarn test
+- yarn test
 notifications:
   slack:
     secure: h7CJKsyJdZstrUUBuyRbWpXVpT5ZrDR8cnsRSoAWbpC37y7FQTtUR/70umVGphm5JlRuwxxeg2WASjgaToIYuwb/1G2CnwuVfitNl/SyxwAmyeFLkdmpG2VoV0PYs475x2Ta24tmSojAwmJhuHdVPE5SMyUdxcUcQpvfkHIlo9hizdfvdHMru38eDZBjnx8FDAX9a79qEtUDkUoN79GsoyO4qqxUjXqpMoY64OonyhIslgHbJmd+jUaTCnD9WqhS2PH6h0NBW2U/jw2G5hvWUDyex65I6PV6YAQt58bNH7yf+o+pkTDlq675LqrJZ1Wcf30U9QZiR74Su2bv6xUiY1pbnzf8MMV/mwKYKFU1MpNE/FV5JXhTMN3RYJ4udQ4weQVKoEob4wS7XYgrjBNJ9Wkl+Je+H1PgiYHAHEb5RVzVDtznSMqWBu/I13/sEj10JIJwEZMXtuZmRT1Kyatkhl38PKldPSQtR7H8rvT+tUeUvlDRWt3kpBwOPsiK5/XEDmxlu2TtMnX+MMARCNPfP/Z23dkHCPAdK3Sjc+IatZECOKFYH1Km2p8lnBEIrCKgFMqQH9WqUaM9DMaLVzHqP3S5NkuYYQUvBOQCM9tw/1115Z2AHTq1lR1oXBPO+RTFo/UL0S3ohw3UD+u+j53DOpLDIJjgp8NTvpjkTeeLiks=
