@@ -1,4 +1,5 @@
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../shadycss/apply-shim.html">
+<link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../cosmoz-tree/cosmoz-tree.html">
 
@@ -59,128 +60,134 @@ The component uses a custom template to display each path part, allowing user to
 
 	</template>
 	<script>
-		Polymer({
-			is: 'cosmoz-treenode-breadcrumb',
+		class CosmozTreenodeBreadcrumb extends Polymer.mixinBehaviors([Polymer.Templatizer], Polymer.Element) {
 
-			properties: {
+			constructor() {
+				super();
+				this._templateInstances = null;
+			}
 
-				/**
-				 * Name of the property used to lookup the displayed node in the tree
-				 */
-				keyProperty: {
-					type: String,
-				},
+			static get is() {
+				return 'cosmoz-treenode-breadcrumb';
+			}
 
-				/**
-				 * The value for the `keyProperty` used to lookup the node in the tree.
-				 */
-				keyValue: {
-					type: String
-				},
+			static get properties() {
+				return {
 
-				ownerTree: {
-					type: Cosmoz.Tree
-				},
+					/**
+					* Name of the property used to lookup the displayed node in the tree
+					*/
+					keyProperty: {
+						type: String,
+					},
 
-				indexAs: {
-					type: String,
-					value: 'index'
-				},
+					/**
+					* The value for the `keyProperty` used to lookup the node in the tree.
+					*/
+					keyValue: {
+						type: String
+					},
 
-				nodeAs: {
-					type: String,
-					value: 'node'
-				},
+					ownerTree: {
+						type: Cosmoz.Tree
+					},
 
-				pathSeparatorAs: {
-					type: String,
-					value: 'pathSeparator'
-				},
+					indexAs: {
+						type: String,
+						value: 'index'
+					},
 
-				valueAs: {
-					type: String,
-					value: 'value'
-				},
+					nodeAs: {
+						type: String,
+						value: 'node'
+					},
 
-				valueProperty: {
-					type: String,
-					value: 'name'
-				},
+					pathSeparatorAs: {
+						type: String,
+						value: 'pathSeparator'
+					},
 
-				pathSeparator: {
-					type: String,
-					value: '/'
-				},
+					valueAs: {
+						type: String,
+						value: 'value'
+					},
 
-				/**
-				 * Represent a number of nodes that should not be rendered starting from root.
-				 * If the path to the displayed node has less nodes than this number, then nothing is hidden.
-				 */
-				hideFromRoot: {
-					type: Number,
-					value: 0
-				},
+					valueProperty: {
+						type: String,
+						value: 'name'
+					},
 
-				showMaxNodes: {
-					type: Number,
-					value: 0
-				},
+					pathSeparator: {
+						type: String,
+						value: '/'
+					},
 
-				ellipsis: {
-					type: String,
-					value: '… /'
-				},
+					/**
+					* Represent a number of nodes that should not be rendered starting from root.
+					* If the path to the displayed node has less nodes than this number, then nothing is hidden.
+					*/
+					hideFromRoot: {
+						type: Number,
+						value: 0
+					},
 
-				noWrap: {
-					type: Boolean,
-					reflectToAttribute: true
-				},
+					showMaxNodes: {
+						type: Number,
+						value: 0
+					},
 
-				_path: {
-					type: Array,
-					computed: '_computePath(ownerTree, keyProperty, keyValue)'
-				},
+					ellipsis: {
+						type: String,
+						value: '… /'
+					},
 
-				_pathToRender: {
-					type: Array,
-					computed: '_computePathToRender(_path, hideFromRoot, showMaxNodes)'
-				},
+					noWrap: {
+						type: Boolean,
+						reflectToAttribute: true
+					},
 
-				_textPath: {
-					type: String
-				},
+					_path: {
+						type: Array,
+						computed: '_computePath(ownerTree, keyProperty, keyValue)'
+					},
 
-				_hideEllipsis: {
-					type: Boolean,
-					value: true
-				}
-			},
+					_pathToRender: {
+						type: Array,
+						computed: '_computePathToRender(_path, hideFromRoot, showMaxNodes)'
+					},
 
-			behaviors: [
-				Polymer.Templatizer
-			],
+					_textPath: {
+						type: String
+					},
 
-			observers: [
-				'_renderNode(_pathToRender, pathSeparator)'
-			],
+					_hideEllipsis: {
+						type: Boolean,
+						value: true
+					}
+				};
+			}
 
-			_templateInstances: null,
+			static get observers() {
+				return [
+					'_renderNode(_pathToRender, _templateInstances, nodeAs, indexAs, pathSeparatorAs, pathSeparator, valueAs, ownerTree, valueProperty, _path)'
+				];
+			}
 
-			ready: function () {
+			ready() {
 				this._instanceProps = {};
 				this._instanceProps[this.nodeAs] = true;
 				this._instanceProps[this.indexAs] = true;
 				this._instanceProps[this.valueAs] = true;
 				this._instanceProps[this.pathSeparatorAs] = true;
 				this._templateInstances = [];
-			},
+			}
 
-			_computePathToRender: function (path, hideFromRoot, showMaxNode) {
+			_computePathToRender(path, hideFromRoot, showMaxNode) {
 				if (!path){
 					return;
 				}
 
-				var pathToRender = path;
+				let pathToRender = path;
 				if (hideFromRoot > 0 && path.length > hideFromRoot) {
 					pathToRender = path.slice(hideFromRoot);
 				}
@@ -190,12 +197,12 @@ The component uses a custom template to display each path part, allowing user to
 				}
 
 				return pathToRender;
-			},
+			}
 
-			_computePath: function (ownerTree, keyProperty, keyValue) {
+			_computePath(ownerTree, keyProperty, keyValue) {
 				// HACK(pasleq): Cosmoz.Tree API needs to be fixed to avoid such code in components
 
-				var path = null,
+				let path = null,
 					node,
 					i;
 
@@ -224,17 +231,17 @@ The component uses a custom template to display each path part, allowing user to
 				}
 
 				return path;
-			},
+			}
 
 
-			_renderNode: function (pathToRender) {
+			_renderNode(pathToRender, _templateInstances, nodeAs, indexAs, pathSeparatorAs, pathSeparator, valueAs, ownerTree, valueProperty, _path) {
 
 				if (!pathToRender || !Array.isArray(pathToRender) || pathToRender.length === 0) {
 					this._hideEllipsis = true;
 					return;
 				}
 
-				var parent,
+				let parent,
 					instance,
 					node,
 					i;
@@ -244,21 +251,21 @@ The component uses a custom template to display each path part, allowing user to
 				parent = Polymer.dom(this);
 				this._ensureTemplatized();
 
-				if (pathToRender.length > this._templateInstances.length) {
-					for (i = this._templateInstances.length; i < pathToRender.length; i++) {
-						this._templateInstances.push(this.stamp());
+				if (pathToRender.length > _templateInstances.length) {
+					for (i = _templateInstances.length; i < pathToRender.length; i++) {
+						_templateInstances.push(this.stamp());
 					}
-				} else if (pathToRender.length < this._templateInstances.length) {
-					this._templateInstances.splice(pathToRender.length);
+				} else if (pathToRender.length < _templateInstances.length) {
+					_templateInstances.splice(pathToRender.length);
 				}
 
 				for (i = 0; i < pathToRender.length; i += 1) {
 					node = pathToRender[i];
-					instance = this._templateInstances[i];
-					instance[this.nodeAs] = node;
-					instance[this.indexAs] = i;
-					instance[this.pathSeparatorAs] = this.pathSeparator;
-					instance[this.valueAs] = this.ownerTree.getProperty(node, this.valueProperty);
+					instance = _templateInstances[i];
+					instance[nodeAs] = node;
+					instance[indexAs] = i;
+					instance[pathSeparatorAs] = pathSeparator;
+					instance[valueAs] = ownerTree.getProperty(node, valueProperty);
 					parent.appendChild(instance.root);
 
 					if (instance._flushProperties) {
@@ -266,14 +273,14 @@ The component uses a custom template to display each path part, allowing user to
 					}
 				}
 
-				this._hideEllipsis = pathToRender.length === this._path.length;
-				this._textPath = this._path.map(function (node) {
-					return this.ownerTree.getProperty(node, this.valueProperty);
-				}, this).join(this.pathSeparator);
-			},
+				this._hideEllipsis = pathToRender.length === _path.length;
+				this._textPath = _path.map(function (node) {
+					return this.ownerTree.getProperty(node, valueProperty);
+				}, this).join(pathSeparator);
+			}
 
-			_cleanPreviousRender: function () {
-				var inst,
+			_cleanPreviousRender() {
+				let inst,
 					i,
 					j;
 
@@ -290,9 +297,9 @@ The component uses a custom template to display each path part, allowing user to
 						}
 					}
 				}
-			},
+			}
 
-			_ensureTemplatized: function () {
+			_ensureTemplatized() {
 				if (!this.ctor) {
 					this._nodeTemplate = Polymer.dom(this).querySelector('template');
 					if (this._nodeTemplate === null) {
@@ -301,23 +308,21 @@ The component uses a custom template to display each path part, allowing user to
 
 					this.templatize(this._nodeTemplate);
 				}
-			},
+			}
 
-			_forwardParentProp: function (prop, value) {
+			_forwardParentProp(prop, value) {
 				if (this._templateInstances) {
-					this._templateInstances.forEach(function (inst) {
-						inst[prop] = value;
-					}, this);
-				}
-			},
-
-			_forwardParentPath: function (path, value) {
-				if (this._templateInstances) {
-					this._templateInstances.forEach(function (inst) {
-						inst.notifyPath(path, value, true);
-					});
+					this._templateInstances.forEach(inst => inst[prop] = value);
 				}
 			}
-		});
+
+			_forwardParentPath(path, value) {
+				if (this._templateInstances) {
+					this._templateInstances.forEach(inst => inst.notifyPath(path, value, true));
+				}
+			}
+		}
+
+		customElements.define(CosmozTreenodeBreadcrumb.is, CosmozTreenodeBreadcrumb);
 	</script>
 </dom-module>
