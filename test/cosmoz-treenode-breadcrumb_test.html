@@ -90,7 +90,7 @@
 		});
 
 		test('renders all path parts', done => {
-			const children = Polymer.FlattenedNodesObserver.getFlattenedNodes(basicFixture).filter(n => n.nodeType === Node.ELEMENT_NODE)
+			const children = Polymer.FlattenedNodesObserver.getFlattenedNodes(basicFixture).filter(n => n.nodeType === Node.ELEMENT_NODE);
 
 			// TODO(pasleq): how to check the first separator is not visible ?
 			assert.equal(children[0].textContent, basicFixture.pathSeparator);
@@ -109,7 +109,7 @@
 
 			basicFixture.keyValue = '1.4';
 
-			children = Polymer.FlattenedNodesObserver.getFlattenedNodes(basicFixture).filter(n => n.nodeType === Node.ELEMENT_NODE)
+			children = Polymer.FlattenedNodesObserver.getFlattenedNodes(basicFixture).filter(n => n.nodeType === Node.ELEMENT_NODE);
 
 			// verfify node 1.4 is rendered
 			assert.equal(children[0].textContent, basicFixture.pathSeparator);
@@ -143,7 +143,7 @@
 		});
 
 		test('renders all path parts', done => {
-			const children = Polymer.FlattenedNodesObserver.getFlattenedNodes(basicFixture).filter(n => n.nodeType === Node.ELEMENT_NODE)
+			const children = Polymer.FlattenedNodesObserver.getFlattenedNodes(basicFixture).filter(n => n.nodeType === Node.ELEMENT_NODE);
 
 			// TODO(pasleq): how to check the first separator is not visible ?
 			assert.equal(children[0].textContent, basicFixture.pathSeparator);
@@ -174,7 +174,7 @@
 		});
 
 		test('renders all path parts', done => {
-			const children = Polymer.FlattenedNodesObserver.getFlattenedNodes(multiRootFixture).filter(n => n.nodeType === Node.ELEMENT_NODE)
+			const children = Polymer.FlattenedNodesObserver.getFlattenedNodes(multiRootFixture).filter(n => n.nodeType === Node.ELEMENT_NODE);
 
 			// TODO(pasleq): how to check the first separator is not visible ?
 			assert.equal(children[0].textContent, multiRootFixture.pathSeparator);
@@ -204,7 +204,7 @@
 		});
 
 		test('renders all path parts', done => {
-			const children = Polymer.FlattenedNodesObserver.getFlattenedNodes(missingAncestorFixture).filter(n => n.nodeType === Node.ELEMENT_NODE)
+			const children = Polymer.FlattenedNodesObserver.getFlattenedNodes(missingAncestorFixture).filter(n => n.nodeType === Node.ELEMENT_NODE);
 
 			// TODO(pasleq): how to check the first separator is not visible ?
 			assert.equal(children[0].textContent, missingAncestorFixture.pathSeparator);
