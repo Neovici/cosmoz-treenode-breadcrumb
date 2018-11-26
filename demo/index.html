@@ -106,10 +106,10 @@
 	</div>
 
 	<script>
-		window.addEventListener('WebComponentsReady', function () {
-			var basic = document.getElementById('basic');
+		window.addEventListener('WebComponentsReady', () => {
+			let basic = document.getElementById('basic');
 			basic = !basic.set ? basic.firstElementChild : basic;
-			basic.getOwnerTree = function (treeJson) {
+			basic.getOwnerTree = treeJson => {
 				if (treeJson) {
 					return new Cosmoz.DefaultTree(treeJson);
 				}
