@@ -165,8 +165,11 @@ The component uses a custom template to display each path part, allowing user to
 			],
 
 			_templateInstances: null,
-
-			ready: function () {
+			/**
+			 * Setup instance properties and template instances.
+			 * @returns {void}
+			 */
+			ready() {
 				this._instanceProps = {};
 				this._instanceProps[this.nodeAs] = true;
 				this._instanceProps[this.indexAs] = true;
@@ -174,13 +177,19 @@ The component uses a custom template to display each path part, allowing user to
 				this._instanceProps[this.pathSeparatorAs] = true;
 				this._templateInstances = [];
 			},
-
-			_computePathToRender: function (path, hideFromRoot, showMaxNode) {
+			/**
+			 * Get path to render.
+			 * @param {array} path Path to render.
+			 * @param {number} hideFromRoot Number of nodes not be rendered starting from the root.
+			 * @param {number} showMaxNode Maximum number of nodes to show.
+			 * @returns {array} Path to render.
+			 */
+			_computePathToRender(path, hideFromRoot, showMaxNode) {
 				if (!path){
 					return;
 				}
 
-				var pathToRender = path;
+				let pathToRender = path;
 				if (hideFromRoot > 0 && path.length > hideFromRoot) {
 					pathToRender = path.slice(hideFromRoot);
 				}
@@ -191,11 +200,17 @@ The component uses a custom template to display each path part, allowing user to
 
 				return pathToRender;
 			},
-
-			_computePath: function (ownerTree, keyProperty, keyValue) {
+			/**
+			 * Get path.
+			 * @param {object} ownerTree Owner tree.
+			 * @param {string} keyProperty Key property to get nodes by.
+			 * @param {string} keyValue Key value to get nodes by.
+			 * @returns {array} Path.
+			 */
+			_computePath(ownerTree, keyProperty, keyValue) {
 				// HACK(pasleq): Cosmoz.Tree API needs to be fixed to avoid such code in components
 
-				var path = null,
+				let path = null,
 					node,
 					i;
 
@@ -225,16 +240,19 @@ The component uses a custom template to display each path part, allowing user to
 
 				return path;
 			},
-
-
-			_renderNode: function (pathToRender) {
+			/**
+			 * Render node from given path.
+			 * @param {array} pathToRender Path to render.
+			 * @returns {void}
+			 */
+			_renderNode(pathToRender) {
 
 				if (!pathToRender || !Array.isArray(pathToRender) || pathToRender.length === 0) {
 					this._hideEllipsis = true;
 					return;
 				}
 
-				var parent,
+				let parent,
 					instance,
 					node,
 					i;
@@ -271,9 +289,12 @@ The component uses a custom template to display each path part, allowing user to
 					return this.ownerTree.getProperty(node, this.valueProperty);
 				}, this).join(this.pathSeparator);
 			},
-
-			_cleanPreviousRender: function () {
-				var inst,
+			/**
+			 * Remove previously rendered node path.
+			 * @returns {void}
+			 */
+			_cleanPreviousRender() {
+				let inst,
 					i,
 					j;
 
@@ -291,8 +312,11 @@ The component uses a custom template to display each path part, allowing user to
 					}
 				}
 			},
-
-			_ensureTemplatized: function () {
+			/**
+			 * Ensure template is active.
+			 * @returns {void}
+			 */
+			_ensureTemplatized() {
 				if (!this.ctor) {
 					this._nodeTemplate = Polymer.dom(this).querySelector('template');
 					if (this._nodeTemplate === null) {
@@ -302,20 +326,26 @@ The component uses a custom template to display each path part, allowing user to
 					this.templatize(this._nodeTemplate);
 				}
 			},
-
-			_forwardParentProp: function (prop, value) {
+			/**
+			 * Set a property to a given value on all instances.
+			 * @param {string} prop Property to set.
+			 * @param {any} value Value to set.
+			 * @returns {void}
+			 */
+			_forwardParentProp(prop, value) {
 				if (this._templateInstances) {
-					this._templateInstances.forEach(function (inst) {
-						inst[prop] = value;
-					}, this);
+					this._templateInstances.forEach(inst => inst[prop] = value, this);
 				}
 			},
-
-			_forwardParentPath: function (path, value) {
+			/**
+			 * Notify a path value change on all instances.
+			 * @param {array} path Path to notify on.
+			 * @param {any} value Value.
+			 * @returns {void}
+			 */
+			_forwardParentPath(path, value) {
 				if (this._templateInstances) {
-					this._templateInstances.forEach(function (inst) {
-						inst.notifyPath(path, value, true);
-					});
+					this._templateInstances.forEach(inst => inst.notifyPath(path, value, true));
 				}
 			}
 		});
